@@ -144,7 +144,12 @@ for idx, fname in enumerate(images):
 	# fit the lane boundaries to the left,right center positions found
 	yvals = range(0,warped.shape[0])
 
-	left_fit = np.polyfit(res_yvals, leftx, 3)
+    	if len(res_yvals)>len(leftx):
+        	res_yvals = res_yvals[:len(leftx)]
+    	elif len(res_yvals)<len(leftx):
+        	leftx = leftx[:len(res_yvals)]
+
+    	left_fit = np.polyfit(res_yvals, leftx, 3)
 	left_fitx = left_fit[0]*yvals*yvals*yvals + left_fit[1]*yvals*yvals + left_fit[2]*yvals+left_fit[3]
 	left_fitx = np.array(left_fitx,np.int32)
 	
